@@ -22,8 +22,50 @@ Build an application that can:
 - Pandas
 - Plotly
 - Git/GitHub
-- Codex
 
-## Current Status
 
-Week 1: Project setup and foundation.
+## Local PostgreSQL Setup
+
+This project uses PostgreSQL running inside Docker.
+
+### Start PostgreSQL
+
+```bash
+docker compose up -d
+```
+
+### Check Running Containers
+
+```bash
+docker ps
+```
+
+You should see:
+
+```text
+datasense_postgres
+```
+
+### Connect To PostgreSQL Manually
+
+```bash
+docker exec -it datasense_postgres psql -U datasense_user -d datasense_db
+```
+
+Exit PostgreSQL with:
+
+```sql
+\q
+```
+
+### Test Python Database Connection
+
+```bash
+python app/database.py
+```
+
+Expected output:
+
+```text
+Database connection successful.
+```
