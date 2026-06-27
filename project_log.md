@@ -39,3 +39,26 @@ Set up PostgreSQL using Docker and connect to it from Python.
 - Python can connect to PostgreSQL using `psycopg`.
 
 
+## Week 3
+
+### Goal
+
+Refactor the database code into a reusable architecture.
+
+### What I Built
+
+- Split the database layer into reusable modules.
+- Created a repository layer.
+- Created a development database demo script.
+- Kept the Streamlit UI independent from the backend.
+
+### What I Learned
+
+- Single Responsibility Principle (SRP). A file, class, or function should have one job.
+- Why SQL should not live inside application code.
+- Why reusable modules reduce duplication.
+- How a repository layer simplifies future development.
+
+### Reflection
+
+The project now feels like a real software project instead of a collection of scripts.
