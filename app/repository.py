@@ -32,3 +32,62 @@ def get_latest_events(limit=5):
             """, (limit,))
 
             return cur.fetchall()
+
+
+def create_events_table():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS events (
+                    event_id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    event_name TEXT NOT NULL,
+                    event_timestamp TIMESTAMP NOT NULL,
+                    value NUMERIC
+                );
+            """)
+
+
+def insert_events(events):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.executemany("""
+                INSERT INTO events (
+                    event_id,
+                    user_id,
+                    event_name,
+                    event_timestamp,
+                    value
+                )
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (event_id) DO NOTHING;
+            """, events)
+
+
+def count_events():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT COUNT(*)
+                FROM events;
+            """)
+
+            return cur.fetchone()[0]
+
+
+def get_latest_product_events(limit=5):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    event_id,
+                    user_id,
+                    event_name,
+                    event_timestamp,
+                    value
+                FROM events
+                ORDER BY event_timestamp DESC
+                LIMIT %s;
+            """, (limit,))
+
+            return cur.fetchall()
