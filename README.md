@@ -39,12 +39,19 @@ The application will eventually be able to:
 datasense-ai/
 
 app/
-├── main.py           # Streamlit application
-├── database.py       # Database connection
-├── repository.py     # Database operations
-└── db_demo.py        # Database testing script
+├── main.py
+├── database.py
+├── repository.py
+├── ingestion.py
+└── db_demo.py
 
 data/
+├── raw/
+├── processed/
+└── samples/
+    └── product_events.csv
+
+docs/
 notebooks/
 sql/
 tests/
@@ -115,6 +122,33 @@ Database connection successful.
 
 ---
 
+# CSV Data Ingestion
+
+The project can ingest product event data from CSV into PostgreSQL. A sample dataset is available at:
+
+```text
+data/samples/product_events.csv
+```
+
+Run the ingestion pipeline:
+
+```bash
+python app/ingestion.py
+```
+
+The pipeline:
+
+1. Reads the CSV using Pandas.
+2. Validates the required columns.
+3. Converts timestamps into datetime values.
+4. Creates the PostgreSQL `events` table if needed.
+5. Inserts the events.
+6. Prevents duplicate events using `event_id`.
+
+The pipeline is idempotent: running it multiple times does not duplicate previously loaded events.
+
+---
+
 # Streamlit Application
 
 Launch the application with:
@@ -137,7 +171,7 @@ streamlit run app/main.py
 
 ✅ Reusable database layer implemented
 
-⬜ CSV ingestion
+✅ CSV ingestion
 
 ⬜ API ingestion
 

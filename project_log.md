@@ -62,3 +62,30 @@ Refactor the database code into a reusable architecture.
 ### Reflection
 
 The project now feels like a real software project instead of a collection of scripts.
+
+
+## Week 4
+
+### Goal
+
+Build the first real data ingestion pipeline by loading CSV data into PostgreSQL.
+
+### What I Built
+
+- Created a reusable sample product-events dataset.
+- Added a real `events` table.
+- Added batch event insertion to the repository layer.
+- Created a CSV ingestion module.
+- Added basic input validation.
+- Converted Pandas data into database-ready records.
+- Added duplicate protection using `event_id`.
+- Verified imported data directly using SQL.
+
+### What I Learned
+
+- How raw data moves from a file into PostgreSQL.
+- Why input data should be validated before loading.
+- How application data is converted into database records.
+- How batch database inserts work.
+- Why ingestion pipelines should be safe to rerun.
+- The meaning of idempotency in a data pipeline.

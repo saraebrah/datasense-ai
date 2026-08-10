@@ -1,0 +1,11 @@
+event_id,user_id,event_name,event_timestamp,value
+evt_001,user_001,signup,2026-08-01T09:00:00,
+evt_002,user_001,login,2026-08-01T09:05:00,
+evt_003,user_001,feature_used,2026-08-01T09:10:00,1
+evt_004,user_002,signup,2026-08-01T10:00:00,
+evt_005,user_002,login,2026-08-01T10:05:00,
+evt_006,user_002,feature_used,2026-08-01T10:20:00,1
+evt_007,user_003,signup,2026-08-02T11:00:00,
+evt_008,user_003,login,2026-08-02T11:15:00,
+evt_009,user_001,login,2026-08-03T08:30:00,
+evt_010,user_002,feature_used,2026-08-03T12:00:00,1
