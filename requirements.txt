@@ -3,3 +3,4 @@ streamlit
 psycopg[binary]
 python-dotenv
 plotly
+requests
