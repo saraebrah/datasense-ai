@@ -89,3 +89,39 @@ Build the first real data ingestion pipeline by loading CSV data into PostgreSQL
 - How batch database inserts work.
 - Why ingestion pipelines should be safe to rerun.
 - The meaning of idempotency in a data pipeline.
+
+
+## Week 5
+
+### Goal
+
+Build an ingestion pipeline that retrieves external data from a public API and stores it in PostgreSQL.
+
+### What I Built
+
+- Added the Requests HTTP library.
+- Made API calls from Python.
+- Added a reusable API client module.
+- Used a geocoding API to convert city names into coordinates.
+- Retrieved weather forecasts from a public API.
+- Converted JSON API responses into database records.
+- Added a weather forecast table.
+- Added database upsert logic.
+- Loaded API data into PostgreSQL.
+- Verified API data directly using SQL.
+
+### What I Learned
+
+- How HTTP GET requests work.
+- How query parameters are passed to APIs.
+- How JSON API responses become Python objects.
+- Why network requests need timeouts.
+- Why HTTP errors should be checked explicitly.
+- How one API response can provide input to another API.
+- How to transform external JSON into an internal data model.
+- The difference between insert-only ingestion and upsert ingestion.
+- Why forecasts should be updated rather than duplicated.
+
+### Issues / Questions
+
+- No unresolved issues or questions documented yet.
