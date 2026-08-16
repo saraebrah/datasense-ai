@@ -43,13 +43,14 @@ app/
 ├── database.py
 ├── repository.py
 ├── ingestion.py
+├── api_client.py
+├── weather_ingestion.py
 └── db_demo.py
 
 data/
 ├── raw/
 ├── processed/
 └── samples/
-    └── product_events.csv
 
 docs/
 notebooks/
@@ -149,6 +150,43 @@ The pipeline is idempotent: running it multiple times does not duplicate previou
 
 ---
 
+# Public API Ingestion
+
+DataSense AI can also ingest data directly from external APIs. The current example uses the Open-Meteo APIs.
+
+The ingestion flow is:
+
+```text
+City name
+    ↓
+Geocoding API
+    ↓
+Latitude / Longitude
+    ↓
+Weather Forecast API
+    ↓
+JSON
+    ↓
+Python transformation
+    ↓
+PostgreSQL
+```
+
+Run the weather ingestion pipeline:
+
+```bash
+python app/weather_ingestion.py
+```
+
+The pipeline retrieves three days of hourly:
+
+- Temperature
+- Precipitation
+
+Forecast records are upserted into PostgreSQL, so rerunning the pipeline updates existing forecasts instead of creating duplicates.
+
+---
+
 # Streamlit Application
 
 Launch the application with:
@@ -173,7 +211,7 @@ streamlit run app/main.py
 
 ✅ CSV ingestion
 
-⬜ API ingestion
+✅ API ingestion
 
 ⬜ Analytics engine
 
