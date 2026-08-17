@@ -163,4 +163,39 @@ def get_latest_weather_forecasts(limit=5):
                 LIMIT %s;
             """, (limit,))
 
-            return cur.fetchall()                                
+            return cur.fetchall()          
+
+
+def get_all_events():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    event_id,
+                    user_id,
+                    event_name,
+                    event_timestamp,
+                    value
+                FROM events
+                ORDER BY event_timestamp;
+            """)
+
+            return cur.fetchall()
+
+
+def get_all_weather_forecasts():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    location_name,
+                    country,
+                    forecast_time,
+                    temperature_c,
+                    precipitation_mm,
+                    retrieved_at
+                FROM weather_forecasts
+                ORDER BY forecast_time;
+            """)
+
+            return cur.fetchall()
