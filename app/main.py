@@ -1,9 +1,26 @@
+import plotly.express as px
 import streamlit as st
 
-st.set_page_config(page_title="DataSense AI", layout="wide")
+from dashboard_data import (
+    get_daily_event_activity,
+    get_event_counts_by_type,
+    load_events_dataframe,
+    load_weather_dataframe,
+)
+
+
+st.set_page_config(
+    page_title="DataSense AI",
+    layout="wide",
+)
+
 
 st.title("DataSense AI")
-st.write("AI-powered data assistant for ingesting, analyzing, and exploring datasets.")
+st.caption(
+    "Interactive analytics for product events "
+    "and weather data."
+)
 
-st.subheader("Week 1 Status")
-st.success("Project setup is working.")
+
+events_df = load_events_dataframe()
+weather_df = load_weather_dataframe()
