@@ -24,3 +24,11 @@ st.caption(
 
 events_df = load_events_dataframe()
 weather_df = load_weather_dataframe()
+
+
+product_tab, weather_tab = st.tabs(
+    [
+        "Product Events",
+        "Weather Forecasts",
+    ]
+)
