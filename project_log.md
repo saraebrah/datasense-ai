@@ -122,6 +122,35 @@ Build an ingestion pipeline that retrieves external data from a public API and s
 - The difference between insert-only ingestion and upsert ingestion.
 - Why forecasts should be updated rather than duplicated.
 
-### Issues / Questions
 
-- No unresolved issues or questions documented yet.
+
+## Week 7
+
+### Goal
+
+Turn the existing backend into the first usable DataSense AI dashboard.
+
+### What I Built
+
+- Connected Streamlit directly to PostgreSQL-backed data.
+- Added a dashboard data-preparation layer.
+- Added product-event KPI cards.
+- Added interactive event filtering.
+- Added Plotly event visualizations.
+- Added daily product activity visualization.
+- Added interactive event tables.
+- Added weather KPI cards.
+- Added temperature and precipitation visualizations.
+- Added weather data tables.
+- Added empty-data handling.
+
+### What I Learned
+
+- How a user interface retrieves data through a repository layer.
+- How database rows are converted into Pandas DataFrames.
+- How Streamlit reruns an application when widget state changes.
+- How Streamlit widgets can control dashboard data.
+- How to create KPI cards.
+- How Plotly figures integrate with Streamlit.
+- How to separate data preparation from UI code.
+- Why user-facing applications need useful empty states.
