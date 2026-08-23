@@ -42,6 +42,7 @@ app/
 ├── main.py
 ├── database.py
 ├── repository.py
+├── dashboard_data.py
 ├── ingestion.py
 ├── api_client.py
 ├── weather_ingestion.py
@@ -187,9 +188,32 @@ Forecast records are upserted into PostgreSQL, so rerunning the pipeline updates
 
 ---
 
-# Streamlit Application
+# Interactive Dashboard
 
-Launch the application with:
+DataSense AI includes an interactive Streamlit dashboard backed by PostgreSQL.
+
+The dashboard currently includes:
+
+## Product Events
+
+- Total event count
+- Unique user count
+- Event type count
+- Event-type filtering
+- Events-by-type visualization
+- Daily activity visualization
+- Raw event data
+
+## Weather Forecasts
+
+- Forecast record count
+- Average temperature
+- Total precipitation
+- Temperature forecast visualization
+- Precipitation visualization
+- Raw weather data
+
+Run the dashboard:
 
 ```bash
 streamlit run app/main.py
@@ -215,6 +239,6 @@ streamlit run app/main.py
 
 ⬜ Analytics engine
 
-⬜ Interactive dashboard
+✅ Interactive dashboard
 
 ⬜ AI assistant
