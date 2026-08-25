@@ -8,6 +8,11 @@ from dashboard_data import (
     load_weather_dataframe,
 )
 
+from ingestion import (
+    ingest_events_dataframe,
+    load_csv,
+)
+
 
 st.set_page_config(
     page_title="DataSense AI",
@@ -21,6 +26,10 @@ st.caption(
     "and weather data."
 )
 
+if "ingestion_message" in st.session_state:
+    st.success(
+        st.session_state.pop("ingestion_message")
+    )
 
 events_df = load_events_dataframe()
 weather_df = load_weather_dataframe()
@@ -37,6 +46,77 @@ product_tab, weather_tab = st.tabs(
 with product_tab:
 
     st.header("Product Events")
+
+    with st.expander(
+        "Upload Product Events",
+        expanded=False,
+    ):
+
+        uploaded_file = st.file_uploader(
+            "Choose a CSV file",
+            type=["csv"],
+        )
+
+        if uploaded_file is not None:
+
+            try:
+                uploaded_df = load_csv(
+                    uploaded_file
+                )
+
+            except Exception as error:
+                st.error(
+                    f"Unable to read CSV: {error}"
+                )
+
+            else:
+                st.success(
+                    "CSV validation successful."
+                )
+
+                st.write(
+                    f"Rows detected: "
+                    f"{len(uploaded_df)}"
+                )
+
+                st.subheader(
+                    "Upload Preview"
+                )
+
+                st.dataframe(
+                    uploaded_df.head(10),
+                    width="stretch",
+                    hide_index=True,
+                )
+
+                ingest_button = st.button(
+                    "Ingest Data",
+                    type="primary",
+                )
+
+                if ingest_button:
+
+                    try:
+                        processed_rows = (
+                            ingest_events_dataframe(
+                                uploaded_df
+                            )
+                        )
+
+                    except Exception as error:
+                        st.error(
+                            f"Ingestion failed: {error}"
+                        )
+
+                    else:
+                        st.session_state["ingestion_message"] = (
+                            "CSV processed successfully. "
+                            "Existing event IDs were not duplicated."
+                        )
+
+                        st.rerun()
+                        
+
 
     if events_df.empty:
         st.warning(

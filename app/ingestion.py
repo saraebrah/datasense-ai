@@ -19,15 +19,57 @@ REQUIRED_COLUMNS = {
 }
 
 
-def load_csv(file_path):
-    df = pd.read_csv(file_path)
 
+def validate_events_dataframe(df):
     missing_columns = REQUIRED_COLUMNS - set(df.columns)
 
     if missing_columns:
         raise ValueError(
-            f"CSV is missing required columns: {sorted(missing_columns)}"
+            f"CSV is missing required columns: "
+            f"{sorted(missing_columns)}"
         )
+
+    if df.empty:
+        raise ValueError(
+            "CSV contains no data rows."
+        )
+
+    required_non_null_columns = [
+        "event_id",
+        "user_id",
+        "event_name",
+        "event_timestamp",
+    ]
+
+    null_columns = [
+        column
+        for column in required_non_null_columns
+        if df[column].isna().any()
+    ]
+
+    if null_columns:
+        raise ValueError(
+            "Required columns contain missing values: "
+            f"{null_columns}"
+        )
+
+
+    duplicate_event_ids = (
+        df["event_id"]
+        .duplicated()
+        .any()
+    )
+
+    if duplicate_event_ids:
+        raise ValueError(
+            "CSV contains duplicate event_id values."
+        )
+
+
+def load_csv(file_source):
+    df = pd.read_csv(file_source)
+
+    validate_events_dataframe(df)
 
     df["event_timestamp"] = pd.to_datetime(
         df["event_timestamp"],
@@ -55,6 +97,23 @@ def dataframe_to_records(df):
 
     return records
 
+def ingest_events_dataframe(df):
+    validate_events_dataframe(df)
+
+    df = df.copy()
+
+    df["event_timestamp"] = pd.to_datetime(
+        df["event_timestamp"],
+        errors="raise",
+    )
+
+    records = dataframe_to_records(df)
+
+    create_events_table()
+    insert_events(records)
+
+    return len(records)
+
 
 def ingest_csv(file_path):
     df = load_csv(file_path)
@@ -62,13 +121,14 @@ def ingest_csv(file_path):
     print("CSV loaded successfully.")
     print(f"{len(df)} rows found.\n")
 
-    records = dataframe_to_records(df)
-
-    create_events_table()
-    insert_events(records)
+    processed_rows = ingest_events_dataframe(df)
 
     print("Data ingestion complete.")
-    print(f"Total events in database: {count_events()}\n")
+    print(f"{processed_rows} rows processed.")
+    print(
+        f"Total events in database: "
+        f"{count_events()}\n"
+    )
 
     print("Latest events:")
 
@@ -85,3 +145,4 @@ if __name__ == "__main__":
     )
 
     ingest_csv(sample_file)
+
