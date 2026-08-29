@@ -51,7 +51,29 @@ with product_tab:
         "Upload Product Events",
         expanded=False,
     ):
+        sample_csv = """event_id,user_id,event_name,event_timestamp,value
+        evt_example_001,user_example,signup,2026-08-01T09:00:00,
+        evt_example_002,user_example,login,2026-08-01T09:05:00,
+        """
 
+        st.download_button(
+            label="Download Sample CSV",
+            data=sample_csv,
+            file_name="product_events_sample.csv",
+            mime="text/csv",
+    )
+
+        st.caption(
+            "Required columns: "
+            "event_id, user_id, event_name, "
+            "event_timestamp, value"
+        )
+
+        st.caption(
+            "event_id must uniquely identify "
+            "each event."
+        )
+        
         uploaded_file = st.file_uploader(
             "Choose a CSV file",
             type=["csv"],
