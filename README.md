@@ -52,6 +52,8 @@ data/
 ├── raw/
 ├── processed/
 └── samples/
+    ├── product_events.csv
+    └── product_events_extra.csv
 
 docs/
 notebooks/
@@ -148,6 +150,28 @@ The pipeline:
 6. Prevents duplicate events using `event_id`.
 
 The pipeline is idempotent: running it multiple times does not duplicate previously loaded events.
+
+## CSV Upload
+
+Product-event data can also be uploaded directly through the Streamlit interface.
+
+Run the dashboard:
+
+```bash
+streamlit run app/main.py
+```
+
+Open the **Product Events** tab and expand **Upload Product Events**.
+
+Uploaded files are:
+
+1. Parsed with Pandas.
+2. Validated against the expected schema.
+3. Previewed before ingestion.
+4. Transformed into database records.
+5. Inserted into PostgreSQL.
+
+Duplicate `event_id` values already stored in PostgreSQL are not inserted again. After a successful ingestion, the dashboard refreshes automatically to display the new data.
 
 ---
 
