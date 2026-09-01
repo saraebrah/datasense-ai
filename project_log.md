@@ -154,3 +154,40 @@ Turn the existing backend into the first usable DataSense AI dashboard.
 - How Plotly figures integrate with Streamlit.
 - How to separate data preparation from UI code.
 - Why user-facing applications need useful empty states.
+
+
+## Week 8
+
+### Goal
+
+Turn CSV ingestion into a user-facing product workflow instead of requiring terminal commands.
+
+### What I Built
+
+- Refactored CSV ingestion into reusable functions.
+- Separated DataFrame validation from file loading.
+- Added stronger CSV validation.
+- Added duplicate-ID validation.
+- Added Streamlit CSV upload.
+- Added upload previews.
+- Added explicit user confirmation before database writes.
+- Connected uploaded data to the existing PostgreSQL ingestion layer.
+- Added success and error feedback.
+- Added automatic dashboard refresh after ingestion.
+- Added downloadable sample CSV guidance.
+- Verified terminal ingestion still works.
+
+### What I Learned
+
+- How to reuse business logic across multiple interfaces.
+- Why ingestion functions should operate on data rather than UI-specific objects.
+- How to handle uploaded files in Streamlit.
+- How `try` / `except` prevents user input from crashing an application.
+- Why data should be validated before database writes.
+- Why users should preview data before performing destructive or persistent actions.
+- How Streamlit reruns can refresh application state after a database change.
+- The difference between application logic and interface logic.
+
+### Issues / Questions
+
+- No unresolved issues or questions documented yet.
