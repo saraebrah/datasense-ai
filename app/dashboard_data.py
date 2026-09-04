@@ -69,3 +69,34 @@ def get_daily_event_activity(df):
         .reset_index(name="event_count")
         .sort_values("event_date")
     )
+
+
+def build_event_summary_context(df):
+    if df.empty:
+        return None
+
+    event_counts = (
+        df["event_name"]
+        .value_counts()
+        .to_dict()
+    )
+
+    user_counts = (
+        df["user_id"]
+        .value_counts()
+        .to_dict()
+    )
+
+    return {
+        "total_events": len(df),
+        "unique_users": df["user_id"].nunique(),
+        "event_types": df["event_name"].nunique(),
+        "event_counts": event_counts,
+        "events_per_user": user_counts,
+        "first_event_time": str(
+            df["event_timestamp"].min()
+        ),
+        "last_event_time": str(
+            df["event_timestamp"].max()
+        ),
+    }
