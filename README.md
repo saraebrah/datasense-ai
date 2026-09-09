@@ -46,6 +46,8 @@ app/
 ├── ingestion.py
 ├── api_client.py
 ├── weather_ingestion.py
+├── llm_client.py
+├── ai_summary.py
 └── db_demo.py
 
 data/
@@ -245,6 +247,38 @@ streamlit run app/main.py
 
 ---
 
+# AI-Powered Insights
+
+DataSense AI can generate natural-language summaries of product-event data using a locally running language model.
+
+The AI workflow is:
+
+```text
+PostgreSQL
+    ↓
+Pandas
+    ↓
+Calculated metrics
+    ↓
+Structured prompt
+    ↓
+Local LLM
+    ↓
+Natural-language summary
+```
+
+The model is not responsible for calculating core metrics. Python calculates the factual context first, and the model interprets and explains those facts.
+
+Start the application:
+
+```bash
+streamlit run app/main.py
+```
+
+Then select **Generate AI Summary** in the **Product Events** dashboard.
+
+---
+
 # Current Status
 
 ✅ Project foundation complete
@@ -264,5 +298,7 @@ streamlit run app/main.py
 ⬜ Analytics engine
 
 ✅ Interactive dashboard
+
+✅ AI-powered insights
 
 ⬜ AI assistant
