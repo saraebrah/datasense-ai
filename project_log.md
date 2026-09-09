@@ -191,3 +191,37 @@ Turn CSV ingestion into a user-facing product workflow instead of requiring term
 ### Issues / Questions
 
 - No unresolved issues or questions documented yet.
+
+
+## Week 9
+
+### Goal
+
+Add the first AI-powered analytical feature to DataSense AI.
+
+### What I Built
+
+- Set up a locally running language model.
+- Added a reusable LLM client.
+- Added structured event-summary context.
+- Added a prompt-building layer.
+- Generated natural-language analysis from calculated metrics.
+- Added AI summary generation to Streamlit.
+- Used session state to preserve generated summaries.
+- Added failure handling for unavailable model services.
+- Connected AI analysis to dashboard filters.
+
+### What I Learned
+
+- How an application communicates with a language model through an API.
+- Why model communication should be isolated behind a client module.
+- The difference between deterministic calculation and generative interpretation.
+- Why AI should receive structured, grounded context.
+- How prompt design influences model output.
+- Why prompts do not completely eliminate hallucination.
+- How dashboard state can determine the context sent to an AI model.
+- How to handle AI-service failures without breaking the rest of an application.
+
+### Issues / Questions
+
+- No unresolved issues or questions documented yet.
