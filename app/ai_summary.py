@@ -1,7 +1,8 @@
 import json
 
-from llm_client import generate_text
+from llm_client import LLMClient
 
+llm_client = LLMClient()
 
 def build_summary_prompt(context):
     context_json = json.dumps(
@@ -34,4 +35,4 @@ Data:
 def generate_event_summary(context):
     prompt = build_summary_prompt(context)
 
-    return generate_text(prompt)
+    return llm_client.generate_text(prompt)
