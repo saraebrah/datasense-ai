@@ -225,3 +225,40 @@ Add the first AI-powered analytical feature to DataSense AI.
 ### Issues / Questions
 
 - No unresolved issues or questions documented yet.
+
+
+## Week 10
+
+### Goal
+
+Introduce automated testing and improve the application architecture through a purposeful class-based refactor.
+
+### What I Built
+
+- Added pytest.
+- Started using the tests directory.
+- Added ingestion validation tests.
+- Added dashboard transformation tests.
+- Added AI-context tests.
+- Refactored the LLM client from functions into a class.
+- Added configurable LLM client state.
+- Added mocked HTTP tests.
+- Verified LLM client behavior without calling Ollama.
+- Added a repeatable full test suite.
+
+### What I Learned
+
+- The Arrange / Act / Assert testing pattern.
+- Why invalid input should also be tested.
+- How pytest discovers tests.
+- The difference between unit tests and integration tests.
+- Why external dependencies make tests harder.
+- What mocking is and why it is useful.
+- How to verify HTTP calls without making real requests.
+- Why classes are useful when state and behavior naturally belong together.
+- Why not every function should be converted into a class.
+- How automated tests make refactoring safer.
+
+### Issues / Questions
+
+- Plain `pytest` fails during test collection because of the current import paths. Running `PYTHONPATH=app python -m pytest` from the project root passes all 11 tests; consistent imports remain a follow-up improvement.

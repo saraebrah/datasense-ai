@@ -61,6 +61,9 @@ docs/
 notebooks/
 sql/
 tests/
+├── test_ingestion.py
+├── test_dashboard_data.py
+└── test_llm_client.py
 
 README.md
 project_log.md
@@ -125,6 +128,39 @@ Expected output:
 ```text
 Database connection successful.
 ```
+
+---
+
+# Automated Testing
+
+DataSense AI uses `pytest` for automated testing.
+
+Current tests cover:
+
+- CSV schema validation
+- Empty dataset validation
+- Missing required values
+- Duplicate event detection
+- Dashboard data transformations
+- AI summary context generation
+- LLM client configuration
+- LLM HTTP request behavior using mocks
+
+With the virtual environment active, run the full test suite from the project root:
+
+```bash
+PYTHONPATH=app python -m pytest
+```
+
+For verbose output:
+
+```bash
+PYTHONPATH=app python -m pytest -v
+```
+
+- Plain `pytest` fails during test collection because of the current import paths. Running `PYTHONPATH=app python -m pytest` from the project root passes all 11 tests; consistent imports remain a follow-up improvement.
+
+External LLM calls are mocked during unit tests, so Ollama does not need to be running for the LLM client tests.
 
 ---
 
