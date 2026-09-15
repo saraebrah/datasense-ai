@@ -100,3 +100,75 @@ def build_event_summary_context(df):
             df["event_timestamp"].max()
         ),
     }
+
+
+def build_event_qa_context(df):
+    if df.empty:
+        return None
+
+    working_df = df.copy()
+
+    working_df["event_date"] = (
+        working_df["event_timestamp"]
+        .dt.date
+    )
+
+    event_counts = (
+        working_df["event_name"]
+        .value_counts()
+        .to_dict()
+    )
+
+    events_per_user = (
+        working_df["user_id"]
+        .value_counts()
+        .to_dict()
+    )
+
+    daily_activity = (
+        working_df.groupby("event_date")
+        .size()
+        .to_dict()
+    )
+
+    non_null_values = (
+        working_df["value"]
+        .dropna()
+    )
+
+    value_summary = {
+        "count": int(non_null_values.count()),
+        "sum": float(non_null_values.sum()),
+        "average": (
+            float(non_null_values.mean())
+            if not non_null_values.empty
+            else None
+        ),
+    }
+
+    return {
+        "total_events": len(working_df),
+        "unique_users": (
+            working_df["user_id"].nunique()
+        ),
+        "event_types": (
+            working_df["event_name"]
+            .dropna()
+            .unique()
+            .tolist()
+        ),
+        "event_counts": event_counts,
+        "events_per_user": events_per_user,
+        "daily_activity": {
+            str(date): count
+            for date, count
+            in daily_activity.items()
+        },
+        "first_event_time": str(
+            working_df["event_timestamp"].min()
+        ),
+        "last_event_time": str(
+            working_df["event_timestamp"].max()
+        ),
+        "value_summary": value_summary,
+    }
