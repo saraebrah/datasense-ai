@@ -3,17 +3,20 @@ import streamlit as st
 
 from ai_summary import generate_event_summary
 from dashboard_data import (
+    build_event_qa_context,
     build_event_summary_context,
     get_daily_event_activity,
     get_event_counts_by_type,
     load_events_dataframe,
     load_weather_dataframe,
 )
+
 from ingestion import (
     ingest_events_dataframe,
     load_csv,
 )
 
+from qa_service import answer_event_question
 
 st.set_page_config(
     page_title="DataSense AI",
@@ -278,6 +281,75 @@ evt_example_002,user_example,login,2026-08-01T09:05:00,
                         "event_ai_summary"
                     ]
                 )
+
+            st.markdown("---")
+
+            st.subheader(
+                "Ask About Your Data"
+            )
+
+            event_question = st.text_input(
+                "Ask a question about the filtered event data",
+                placeholder=(
+                    "e.g. Which event type "
+                    "is most common?"
+                ),
+            )
+
+            ask_question_button = st.button(
+                "Ask DataSense",
+            )
+
+            if ask_question_button:
+
+                try:
+                    qa_context = (
+                        build_event_qa_context(
+                            filtered_events
+                        )
+                    )
+
+                    with st.spinner(
+                        "Analyzing your question..."
+                    ):
+
+                        answer = (
+                            answer_event_question(
+                                qa_context,
+                                event_question,
+                            )
+                        )
+
+                except Exception as error:
+
+                    st.error(
+                        f"Unable to answer question: "
+                        f"{error}"
+                    )
+
+                else:
+
+                    st.session_state[
+                        "event_qa_answer"
+                    ] = answer
+
+                    st.session_state[
+                        "event_qa_question"
+                    ] = event_question
+
+
+            if (
+                "event_qa_answer"
+                in st.session_state
+            ):
+
+                st.markdown("#### Answer")
+
+                st.write(
+                    st.session_state[
+                        "event_qa_answer"
+                    ]
+                )        
 
             # -------------------------------------------------
             # Events by Type
