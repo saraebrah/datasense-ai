@@ -48,6 +48,7 @@ app/
 ├── weather_ingestion.py
 ├── llm_client.py
 ├── ai_summary.py
+├── qa_service.py
 └── db_demo.py
 
 data/
@@ -63,7 +64,8 @@ sql/
 tests/
 ├── test_ingestion.py
 ├── test_dashboard_data.py
-└── test_llm_client.py
+├── test_llm_client.py
+└── test_qa_service.py
 
 README.md
 project_log.md
@@ -143,6 +145,8 @@ Current tests cover:
 - Duplicate event detection
 - Dashboard data transformations
 - AI summary context generation
+- Q&A context generation
+- Question validation and grounded prompt generation
 - LLM client configuration
 - LLM HTTP request behavior using mocks
 
@@ -158,7 +162,7 @@ For verbose output:
 PYTHONPATH=app python -m pytest -v
 ```
 
-- Plain `pytest` fails during test collection because of the current import paths. Running `PYTHONPATH=app python -m pytest` from the project root passes all 11 tests; consistent imports remain a follow-up improvement.
+- Plain `pytest` fails during test collection because of the current import paths. Running `PYTHONPATH=app python -m pytest` from the project root passes all 18 tests; consistent imports remain a follow-up improvement.
 
 External LLM calls are mocked during unit tests, so Ollama does not need to be running for the LLM client tests.
 
@@ -312,6 +316,43 @@ streamlit run app/main.py
 ```
 
 Then select **Generate AI Summary** in the **Product Events** dashboard.
+
+---
+
+# Natural-Language Analytics
+
+DataSense AI supports natural-language questions about the currently filtered product-event dataset.
+
+Example questions include:
+
+- Which event type is most common?
+- How many unique users are there?
+- Which user generated the most events?
+- Which day had the most activity?
+
+The language model does not have direct database access. Instead, DataSense AI uses this workflow:
+
+```text
+PostgreSQL
+    ↓
+Python / Pandas
+    ↓
+Approved analytics context
+    ↓
+Language model
+    ↓
+Natural-language answer
+```
+
+This keeps database access deterministic while using the language model for interpretation and explanation.
+
+Run the application:
+
+```bash
+streamlit run app/main.py
+```
+
+Then use **Ask About Your Data** from the **Product Events** tab.
 
 ---
 

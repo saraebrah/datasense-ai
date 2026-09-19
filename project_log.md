@@ -262,3 +262,41 @@ Introduce automated testing and improve the application architecture through a p
 ### Issues / Questions
 
 - Plain `pytest` fails during test collection because of the current import paths. Running `PYTHONPATH=app python -m pytest` from the project root passes all 11 tests; consistent imports remain a follow-up improvement.
+
+
+## Week 11
+
+### Goal
+
+Add controlled natural-language analytics to DataSense AI without giving the language model direct database access.
+
+### What I Built
+
+- Added a richer analytics context for Q&A.
+- Added natural-language question validation.
+- Added a dedicated Q&A service.
+- Added grounded Q&A prompts.
+- Added a Streamlit question interface.
+- Connected AI questions to dashboard filters.
+- Added persistent Q&A responses using session state.
+- Added prompt instructions for acknowledging unsupported questions.
+- Added automated tests for question validation.
+- Added automated tests for prompt generation.
+- Added automated tests for Q&A context generation.
+
+### What I Learned
+
+- The difference between AI summarization and natural-language analytics.
+- Why the language model does not need direct database access for every AI feature.
+- How to expose only approved data to a model.
+- Why grounded context reduces hallucination risk.
+- Why a model should explicitly admit when available data cannot answer a question.
+- Why questions should be validated before model calls.
+- How dashboard filters can define the AI's analytical context.
+- Why deterministic calculations should generally remain in Python or SQL.
+- The difference between context-based Q&A and text-to-SQL.
+- Why giving an LLM database tools introduces additional security and reliability concerns.
+
+### Issues / Questions
+
+- The import-path workaround from Week 10 is still required. All 18 tests pass with `PYTHONPATH=app python -m pytest`.
