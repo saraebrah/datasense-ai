@@ -1,11 +1,11 @@
 import pandas as pd
 
 from app.dashboard_data import (
+    build_event_qa_context,
     build_event_summary_context,
     get_daily_event_activity,
     get_event_counts_by_type,
 )
-
 
 def create_sample_events_dataframe():
     return pd.DataFrame(
@@ -92,5 +92,37 @@ def test_empty_dataframe_returns_no_summary_context():
     df = create_sample_events_dataframe().iloc[0:0]
 
     context = build_event_summary_context(df)
+
+    assert context is None
+
+
+def test_event_qa_context():
+
+    df = create_sample_events_dataframe()
+
+    context = build_event_qa_context(df)
+
+    assert context["total_events"] == 4
+
+    assert context["unique_users"] == 2
+
+    assert context["event_counts"]["login"] == 3
+
+    assert context["event_counts"]["signup"] == 1
+
+    assert (
+        context["events_per_user"]["user_001"]
+        == 2
+    )
+
+
+def test_empty_dataframe_returns_no_qa_context():
+
+    df = (
+        create_sample_events_dataframe()
+        .iloc[0:0]
+    )
+
+    context = build_event_qa_context(df)
 
     assert context is None
